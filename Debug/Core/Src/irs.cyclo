@@ -1,0 +1,7 @@
+../Core/Src/irs.c:16:10:readIR	5
+../Core/Src/irs.c:55:10:readForwardLeftIR	1
+../Core/Src/irs.c:60:10:readLeftIR	1
+../Core/Src/irs.c:65:10:readRightIR	1
+../Core/Src/irs.c:70:10:readForwardRightIR	1
+../Core/Src/irs.c:75:10:analogRead	8
+../Core/Src/irs.c:136:6:HAL_ADC_ConvCpltCallback	1
