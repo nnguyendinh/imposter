@@ -29,6 +29,9 @@
 #include "controller.h"
 #include "solver.h"
 #include "gyro.h"
+#include "anim.h"
+#include "ssd1306.h"
+#include "fonts.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -120,10 +123,12 @@ void solve(Algorithm alg) {
 				move(1);
 			break;
 		case LEFT:
+			displayFace(goodright);
 			move(0);
 			turn(-1);
 			break;
 		case RIGHT:
+			displayFace(goodleft);
 			move(0);
 			turn(1);
 			break;
@@ -185,6 +190,8 @@ int main(void)
   HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_SET);
+
+  SSD1306_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -216,8 +223,10 @@ int main(void)
 			  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
 			  irOffset_Set = 1;
 			  gyroInit();
+			  displayFace(smiley);
 		  }
 		  else {
+			  displayFace(angery);
 			  max_forward++;
 		  }
 
@@ -361,7 +370,7 @@ static void MX_I2C1_Init(void)
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.ClockSpeed = 400000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
