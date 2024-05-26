@@ -29,6 +29,10 @@
 #include "controller.h"
 #include "solver.h"
 #include "gyro.h"
+#include "anim.h"
+#include "ssd1306.h"
+#include "fonts.h"
+#include "test.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -120,9 +124,11 @@ void solve(Algorithm alg) {
 			break;
 		case LEFT:
 			turn(-1);
+//			displayFace(goodright);
 			break;
 		case RIGHT:
 			turn(1);
+//			displayFace(goodleft);
 			break;
 		case IDLE:
 			break;
@@ -182,6 +188,8 @@ int main(void)
   HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_SET);
+
+//  SSD1306_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -207,33 +215,32 @@ int main(void)
 	  rightIRvalue = readIR(IR_RIGHT);
 	  forwardRightIRvalue = readIR(IR_FORWARD_RIGHT);
 
+
 	  if (B1 == GPIO_PIN_SET)
 	  {
 		  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
 		  irOffset_Set = 1;
-		  // loadMaze();
 		  gyroInit();
 		  resetPID();
+//		  displayFace(smiley);
 	  }
 
 	  if (B2 == GPIO_PIN_SET)
 	  {
-//		  move(3);
-//		  turn(1);
-//		  readGyro(&Gz);
 		  initPID();
 		  start_pressed = 1;
+		  turn(2);
 	  }
 //
-	  if (start_pressed)
-	  {
-		  move(0);
-
-		  if (S4 == GPIO_PIN_SET)
-			  solve(FLOODFILL);
-		  else
-			  solve(DEAD);
-	  }
+//	  if (start_pressed)
+//	  {
+//		  move(0);
+//
+//		  if (S4 == GPIO_PIN_SET)
+//			  solve(FLOODFILL);
+//		  else
+//			  solve(DEAD);
+//	  }
   }
   /* USER CODE END 3 */
 }
