@@ -1,0 +1,2 @@
+../Core/Src/gyro.c:10:9:gyroInit	440	static
+../Core/Src/gyro.c:62:6:readGyro	48	static
