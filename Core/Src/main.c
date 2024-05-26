@@ -25,6 +25,9 @@
 #include "delay.h"
 #include "encoders.h"
 #include "motors.h"
+#include "pid.h"
+#include "controller.h"
+#include "solver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +56,8 @@ TIM_HandleTypeDef htim8;
 /* USER CODE BEGIN PV */
 GPIO_PinState S1, S2, S3, S4, B1, B2;
 
+int16_t start_pressed = 0;
+
 int16_t left_counts = 0;
 int16_t right_counts = 0;
 
@@ -60,6 +65,17 @@ int16_t forwardLeftIRvalue = 0;
 int16_t leftIRvalue = 0;
 int16_t rightIRvalue = 0;
 int16_t forwardRightIRvalue = 0;
+
+int16_t irOffset_Set = 0;
+
+int16_t walls_set = 0;
+
+int16_t goal_forward_left = 0;
+int16_t goal_forward_right = 0;
+int16_t goal_left = 0;
+int16_t goal_right = 0;
+
+int max_forward = 5;
 
 /* USER CODE END PV */
 
@@ -77,7 +93,39 @@ static void MX_TIM1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void solve(Algorithm alg) {
+	Action nextMove = solver(alg);
+	switch(nextMove) {
+		case FORWARD:
+//			move(1);
+			if (alg == FLOODFILL)
+			{
+				int extra_moves = foresight(); // Already has curr position and heading
+				if (extra_moves > max_forward) {
+					extra_moves = max_forward;
+				}
+				for (int i = 0; i < extra_moves; i++)
+				{
+					solver(FLOODFILL);
+				}
+				move(1 + extra_moves);
+			}
+			else
+				move(1);
+			break;
+		case LEFT:
+			turn(-1);
+			break;
+		case RIGHT:
+			turn(1);
+			break;
+		case IDLE:
+			break;
+	}
+//	if (readIR(IR_FORWARD_LEFT) > 1200 && readIR(IR_FORWARD_RIGHT) > 1200) {
+//		frontCorrection();
+//	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -153,24 +201,27 @@ int main(void)
 	  rightIRvalue = readIR(IR_RIGHT);
 	  forwardRightIRvalue = readIR(IR_FORWARD_RIGHT);
 
-//
-//	  left_counts = getLeftEncoderCounts();
-//	  right_counts = getRightEncoderCounts();
-//
-	  if (B2 == GPIO_PIN_SET) {
-		  setMotorLPWM(0.5);
-		  setMotorRPWM(0.5);
-	  }
-	  else {
-		  setMotorLPWM(-0.5);
-		  setMotorRPWM(-0.5);
+    if (B1 == GPIO_PIN_SET)
+	  {
+		  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
+		  irOffset_Set = 1;
+		  loadMaze();
 	  }
 
-//	  delayMicroseconds(100);
+	  if (B2 == GPIO_PIN_SET)
+	  {
+		  start_pressed = 1;
+	  }
 
-	  left_counts++;
+    if (start_pressed)
+	  {
+		  move(0);
 
-
+		  if (S4 == GPIO_PIN_SET)
+			  solve(FLOODFILL);
+		  else
+			  solve(DEAD);
+    }
   }
   /* USER CODE END 3 */
 }

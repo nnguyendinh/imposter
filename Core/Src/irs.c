@@ -20,31 +20,31 @@ uint16_t readIR(IR ir)
 	switch(ir)
 	    {
 	        case IR_FORWARD_LEFT:
-//	        	HAL_GPIO_WritePin(ForwardLeftEmitter_GPIO_Port, ForwardLeftEmitter_Pin, GPIO_PIN_SET);
-//	        	delayMicroseconds(usDelay);
+	        	HAL_GPIO_WritePin(ForwardLeftEmitter_GPIO_Port, ForwardLeftEmitter_Pin, GPIO_PIN_SET);
+	        	delayMicroseconds(usDelay);
 	        	readValue = analogRead(ir);
-//	        	HAL_GPIO_WritePin(ForwardLeftEmitter_GPIO_Port, ForwardLeftEmitter_Pin, GPIO_PIN_RESET);
+	        	HAL_GPIO_WritePin(ForwardLeftEmitter_GPIO_Port, ForwardLeftEmitter_Pin, GPIO_PIN_RESET);
 	        	return readValue;
 	            break;
 	        case IR_LEFT:
-//	        	HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_SET);
-//	        	delayMicroseconds(usDelay);
+	        	HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_SET);
+	        	delayMicroseconds(usDelay);
 	        	readValue = analogRead(ir);
-//	        	HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_RESET);
+	        	HAL_GPIO_WritePin(LeftEmitter_GPIO_Port, LeftEmitter_Pin, GPIO_PIN_RESET);
 	        	return readValue;
 	            break;
 	        case IR_RIGHT:
-//	        	HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_SET);
-//	        	delayMicroseconds(usDelay);
+	        	HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_SET);
+	        	delayMicroseconds(usDelay);
 	        	readValue = analogRead(ir);
-//	        	HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_RESET);
+	        	HAL_GPIO_WritePin(RightEmitter_GPIO_Port, RightEmitter_Pin, GPIO_PIN_RESET);
 	        	return readValue;
 	            break;
 	        case IR_FORWARD_RIGHT:
-//	        	HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_SET);
-//	        	delayMicroseconds(usDelay);
+	        	HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_SET);
+	        	delayMicroseconds(usDelay);
 	        	readValue = analogRead(ir);
-//	        	HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_RESET);
+	        	HAL_GPIO_WritePin(ForwardRightEmitter_GPIO_Port, ForwardRightEmitter_Pin, GPIO_PIN_RESET);
 	        	return readValue;
 	            break;
 	        default:

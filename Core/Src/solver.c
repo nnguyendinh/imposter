@@ -64,7 +64,7 @@ void initElements()
     currPos = newCell(15, 0);           // Sets current position to row 15, column 0
     currHead = NORTH;                    // Sets current heading to north
 
-    if (HAL_GPIO_ReadPin(Switch1_GPIO_Port, Switch1_Pin) == GPIO_PIN_SET)	// This is not the first run and we want to load maze
+    if (HAL_GPIO_ReadPin(Switch2_GPIO_Port, Switch2_Pin) == GPIO_PIN_SET)	// This is not the first run and we want to load maze
     {
     	loadMaze();
     }
@@ -192,17 +192,17 @@ void recalculate()
     if(goToCenter)
     {
         // Set middle four manhattan distances to 0, and insert all 4 into queue (set middle as destination)
-//        Manhattans[7][7] = 0;
-//        Manhattans[7][8] = 0;
-//        Manhattans[8][7] = 0;
-//        Manhattans[8][8] = 0;
-//        insertQueue(newCell(7, 7));
-//        insertQueue(newCell(7, 8));
-//        insertQueue(newCell(8, 7));
-//        insertQueue(newCell(8, 8));
+       Manhattans[7][7] = 0;
+       Manhattans[7][8] = 0;
+       Manhattans[8][7] = 0;
+       Manhattans[8][8] = 0;
+       insertQueue(newCell(7, 7));
+       insertQueue(newCell(7, 8));
+       insertQueue(newCell(8, 7));
+       insertQueue(newCell(8, 8));
 
-    	Manhattans[11][4] = 0;
-    	insertQueue(newCell(11, 4));
+    	// Manhattans[11][4] = 0;
+    	// insertQueue(newCell(11, 4));
     }
 
     else
@@ -298,7 +298,7 @@ Action floodFill() {
     // If goal has already been reached, set new destination to either middle or starting cell
     if (Manhattans[row][col] == 0)
     {
-    	if (HAL_GPIO_ReadPin(Switch2_GPIO_Port, Switch2_Pin) == GPIO_PIN_SET)	// I want to save the finished maze on this run
+    	if (HAL_GPIO_ReadPin(Switch3_GPIO_Port, Switch3_Pin) == GPIO_PIN_SET)	// I want to save the finished maze on this run
 		{
 			saveMaze();
 		}
