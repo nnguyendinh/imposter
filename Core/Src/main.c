@@ -78,7 +78,7 @@ int16_t goal_forward_right = 0;
 int16_t goal_left = 0;
 int16_t goal_right = 0;
 
-int max_forward = 1;
+int max_forward = 0;
 float Gz;
 
 /* USER CODE END PV */
@@ -103,21 +103,21 @@ void solve(Algorithm alg) {
 	switch(nextMove) {
 		case FORWARD:
 			move(0);
-			move(1);
-//			if (alg == FLOODFILL)
-//			{
-//				int extra_moves = foresight(); // Already has curr position and heading
-//				if (extra_moves > max_forward) {
-//					extra_moves = max_forward;
-//				}
-//				for (int i = 0; i < extra_moves; i++)
-//				{
-//					solver(FLOODFILL);
-//				}
-//				move(1 + extra_moves);
-//			}
-//			else
-//				move(1);
+//			move(1);
+			if (alg == FLOODFILL)
+			{
+				int extra_moves = foresight(); // Already has curr position and heading
+				if (extra_moves > max_forward) {
+					extra_moves = max_forward;
+				}
+				for (int i = 0; i < extra_moves; i++)
+				{
+					solver(FLOODFILL);
+				}
+				move(1 + extra_moves);
+			}
+			else
+				move(1);
 			break;
 		case LEFT:
 			move(0);
@@ -212,9 +212,15 @@ int main(void)
 
 	  if (B1 == GPIO_PIN_SET)
 	  {
-		  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
-		  irOffset_Set = 1;
-		  gyroInit();
+		  if (irOffset_Set == 0) {
+			  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
+			  irOffset_Set = 1;
+			  gyroInit();
+		  }
+		  else {
+			  max_forward++;
+		  }
+
 		  resetPID();
 	  }
 
@@ -239,6 +245,7 @@ int main(void)
 
 	  if (start_pressed)
 	  {
+		  resetPID();
 		  move(0);
 
 		  if (S4 == GPIO_PIN_SET)
