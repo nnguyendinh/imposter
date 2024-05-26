@@ -50,7 +50,7 @@ void turn(int8_t n) {	// Make n 90 degree turns (no acceleration)
 
 void moveEncoderCount(int8_t n) {	// Move n encoder counts (with acceleration)
 
-	setState(MOVING);
+	setState(TURNING);
 
 	setPIDGoalA(0);
 	setPIDGoalD(n);
@@ -164,7 +164,7 @@ void frontCorrection() {
 //				turnEncoderCount(-30);
 //			}
 //		}
-		if (forward_left - goal_forward_left > 150 || forward_right - goal_forward_right > 150) {
+		if (forward_left - goal_forward_left > 250/* || forward_right - goal_forward_right > 300*/) {
 			moveEncoderCount(-15);
 
 //			if ((forward_left - goal_forward_left) - (forward_right - goal_forward_right) < -300) {
@@ -173,6 +173,9 @@ void frontCorrection() {
 //			else if ((forward_left - goal_forward_left) - (forward_right - goal_forward_right) < -300) {
 //				turnEncoderCount(-30);
 //			}
+		}
+		else if (forward_left - goal_forward_left < -250/* || forward_right - goal_forward_right > 300*/) {
+			moveEncoderCount(15);
 		}
 		else {
 			break;

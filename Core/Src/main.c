@@ -78,7 +78,7 @@ int16_t goal_forward_right = 0;
 int16_t goal_left = 0;
 int16_t goal_right = 0;
 
-int max_forward = 5;
+int max_forward = 1;
 float Gz;
 
 /* USER CODE END PV */
@@ -102,34 +102,37 @@ void solve(Algorithm alg) {
 	Action nextMove = solver(alg);
 	switch(nextMove) {
 		case FORWARD:
-//			move(1);
-			if (alg == FLOODFILL)
-			{
-				int extra_moves = foresight(); // Already has curr position and heading
-				if (extra_moves > max_forward) {
-					extra_moves = max_forward;
-				}
-				for (int i = 0; i < extra_moves; i++)
-				{
-					solver(FLOODFILL);
-				}
-				move(1 + extra_moves);
-			}
-			else
-				move(1);
+			move(0);
+			move(1);
+//			if (alg == FLOODFILL)
+//			{
+//				int extra_moves = foresight(); // Already has curr position and heading
+//				if (extra_moves > max_forward) {
+//					extra_moves = max_forward;
+//				}
+//				for (int i = 0; i < extra_moves; i++)
+//				{
+//					solver(FLOODFILL);
+//				}
+//				move(1 + extra_moves);
+//			}
+//			else
+//				move(1);
 			break;
 		case LEFT:
+			move(0);
 			turn(-1);
 			break;
 		case RIGHT:
+			move(0);
 			turn(1);
 			break;
 		case IDLE:
 			break;
 	}
-//	if (readIR(IR_FORWARD_LEFT) > 1200 && readIR(IR_FORWARD_RIGHT) > 1200) {
-//		frontCorrection();
-//	}
+	if (readIR(IR_FORWARD_LEFT) > 1200 && readIR(IR_FORWARD_RIGHT) > 1200) {
+		frontCorrection();
+	}
 }
 /* USER CODE END 0 */
 
@@ -218,7 +221,19 @@ int main(void)
 	  if (B2 == GPIO_PIN_SET)
 	  {
 		  initPID();
+//		  frontCorrection();
 		  start_pressed = 1;
+//		  turn(1);
+//		  move(0);
+//		  move(1);
+//		  move(1);
+//		  move(1);
+//		  turn(1);
+//		  turn(1);
+//		  move(1);
+//		  move(1);
+//		  move(1);
+//		  turn(1);
 //		  turn(1);
 	  }
 

@@ -4,4 +4,4 @@
 ../Core/Src/controller.c:67:6:turnEncoderCount	2
 ../Core/Src/controller.c:83:6:explore	7
 ../Core/Src/controller.c:130:6:frontCorrection	3
-../Core/Src/controller.c:186:6:curve	1
+../Core/Src/controller.c:189:6:curve	1

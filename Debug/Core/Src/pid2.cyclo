@@ -7,7 +7,7 @@
 ../Core/Src/pid2.c:115:6:setIRAngle	8
 ../Core/Src/pid2.c:133:7:accelerateLeftPWM	1
 ../Core/Src/pid2.c:148:7:accelerateRightPWM	1
-../Core/Src/pid2.c:163:6:PDController	20
-../Core/Src/pid2.c:235:6:updatePID	24
-../Core/Src/pid2.c:335:8:PIDdone	2
-../Core/Src/pid2.c:348:6:resetPID	5
+../Core/Src/pid2.c:163:6:PDController	19
+../Core/Src/pid2.c:242:6:updatePID	24
+../Core/Src/pid2.c:342:8:PIDdone	2
+../Core/Src/pid2.c:355:6:resetPID	5
