@@ -211,20 +211,17 @@ int main(void)
 	  {
 		  setIRGoals(readIR(IR_FORWARD_LEFT), readIR(IR_FORWARD_RIGHT), readIR(IR_LEFT), readIR(IR_RIGHT));
 		  irOffset_Set = 1;
-		  // loadMaze();
 		  gyroInit();
 		  resetPID();
 	  }
 
 	  if (B2 == GPIO_PIN_SET)
 	  {
-//		  move(3);
-//		  turn(1);
-//		  readGyro(&Gz);
 		  initPID();
 		  start_pressed = 1;
+//		  turn(1);
 	  }
-//
+
 	  if (start_pressed)
 	  {
 		  move(0);

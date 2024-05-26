@@ -13,24 +13,24 @@
 #include "gyro.h"
 
 // Constants
-const float kPw = 0.0025;	// 0.0025
+const float kPw = 0.0035;	// 0.0025
 const float kDw = 0.12;	// 0.0035
 const float kPx = 0.001;	// 0.001
 const float kDx = 0.0000;		//0.0
 
-const float front_kPx = 0.3; // 0.6
-const float front_kPw = 0.2; // 0.35
+const float front_kPx = 0.3; // 0.3
+const float front_kPw = 0.2; // 0.2
 
-const float kPir = 0.03;		// 0.04	for 2 walls
-const float kPir2 = 0.05;		// 0.08 for 1 wall
+const float kPir = 0.01;		// 0.03	for 2 walls
+const float kPir2 = 0.03;		// 0.05 for 1 wall
 
 const float xacceleration = 0.001; // 0.001
 
 const float PWMMaxx = 0.65; // 0.65
-const float PWMMaxw = 0.32;	//0.35
+const float PWMMaxw = 0.40;	//0.35
 const float PWMMinx = 0.32;	// 0.32
-const float PWMMinw = 0.32;	// 0.32
-const float PWMMin = 0.3;	// 0.28
+const float PWMMinw = 0.28;	// 0.32
+const float PWMMin = 0.28;	// 0.28
 
 const float explore_speed = 0.4;
 const float outer_speed = 1.095833;
@@ -214,6 +214,12 @@ void PDController() {
 	if (fabs(angleCorrection) > PWMMaxw)
 		angleCorrection = sign(angleCorrection) * PWMMaxw;
 
+	if (fabs(angleCorrection) < 0.005)
+		angleCorrection = 0;
+
+	else if (fabs(angleCorrection) < PWMMinw)
+		angleCorrection = sign(angleCorrection) * PWMMinw;
+
 	if (state == ACCELERATING || state == CURVING)
 	{
 		left_PWM_value = accelerateLeftPWM();
@@ -298,7 +304,7 @@ void updatePID() {
 	setMotorLPWM(left_PWM_value);
 	setMotorRPWM(right_PWM_value);
 
-	if(angleError < 30 && angleError > -30 && distanceError < 30 && distanceError > -30)
+	if(angleError < 6 && angleError > -6 && distanceError < 30 && distanceError > -30)
 		goal_reached_timer++;					// Increments goal reached timer when errors are within a certain threshold
 
 	else
