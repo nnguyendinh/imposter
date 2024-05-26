@@ -7,6 +7,7 @@
 "./Core/Src/main.o"
 "./Core/Src/motors.o"
 "./Core/Src/pid.o"
+"./Core/Src/pid2.o"
 "./Core/Src/solver.o"
 "./Core/Src/stm32f2xx_hal_msp.o"
 "./Core/Src/stm32f2xx_it.o"

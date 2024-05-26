@@ -1,5 +1,5 @@
 Core/Src/solver.o: ../Core/Src/solver.c ../Core/Inc/solver.h \
- ../Core/Inc/pid.h ../Core/Inc/main.h \
+ ../Core/Inc/pid2.h ../Core/Inc/main.h \
  ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h \
  ../Core/Inc/stm32f2xx_hal_conf.h \
  ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_rcc.h \
@@ -31,7 +31,7 @@ Core/Src/solver.o: ../Core/Src/solver.c ../Core/Inc/solver.h \
  ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim_ex.h \
  ../Core/Inc/utility.h ../Core/Inc/flash.h
 ../Core/Inc/solver.h:
-../Core/Inc/pid.h:
+../Core/Inc/pid2.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h:
 ../Core/Inc/stm32f2xx_hal_conf.h:

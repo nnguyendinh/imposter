@@ -44,17 +44,33 @@ uint8_t gyroInit(void) {
 //    float Gy_sum = 0.0;
     float Gz_sum = 0.0;
 
-    for (int i = 0; i < 100; ++i) {
-        readGyro(&Gz_readings[i]);
-//        Gx_sum += Gx_readings[i];
-//        Gy_sum += Gy_readings[i];
-        Gz_sum += Gz_readings[i];
-        delayMicroseconds(10000);
+    while(1) {
+    	Gz_offset = 0;
+    	Gz_sum = 0;
+    	for (int i = 0; i < 100; ++i) {
+			readGyro(&Gz_readings[i]);
+	//        Gx_sum += Gx_readings[i];
+	//        Gy_sum += Gy_readings[i];
+			Gz_sum += Gz_readings[i];
+			delayMicroseconds(10000);
+		}
+
+	//    Gx_offset = Gx_sum / 10.0;
+	//    Gy_offset = Gy_sum / 10.0;
+		Gz_offset = Gz_sum / 100.0;
+
+		Gz_sum = 0;
+		for (int i = 0; i < 100; ++i) {
+			readGyro(&Gz_readings[i]);
+			Gz_sum += Gz_readings[i];
+			delayMicroseconds(10000);
+		}
+		if (Gz_sum / 100.0 < 0.1 && Gz_sum / 100.0 > -0.1) {
+			break;
+		}
     }
 
-//    Gx_offset = Gx_sum / 10.0;
-//    Gy_offset = Gy_sum / 10.0;
-    Gz_offset = Gz_sum / 100.0;
+
 
     return 1;
 }

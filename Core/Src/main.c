@@ -25,7 +25,7 @@
 #include "delay.h"
 #include "encoders.h"
 #include "motors.h"
-#include "pid.h"
+#include "pid2.h"
 #include "controller.h"
 #include "solver.h"
 #include "gyro.h"
@@ -213,23 +213,27 @@ int main(void)
 		  irOffset_Set = 1;
 		  // loadMaze();
 		  gyroInit();
+		  resetPID();
 	  }
 
-	  if (B2 == GPIO_PIN_RESET)
+	  if (B2 == GPIO_PIN_SET)
 	  {
-		  readGyro(&Gz);
-		  // start_pressed = 1;
+//		  move(3);
+//		  turn(1);
+//		  readGyro(&Gz);
+		  initPID();
+		  start_pressed = 1;
 	  }
-////
-//    if (start_pressed)
-//	  {
-//		  move(0);
 //
-//		  if (S4 == GPIO_PIN_SET)
-//			  solve(FLOODFILL);
-//		  else
-//			  solve(DEAD);
-//    }
+	  if (start_pressed)
+	  {
+		  move(0);
+
+		  if (S4 == GPIO_PIN_SET)
+			  solve(FLOODFILL);
+		  else
+			  solve(DEAD);
+	  }
   }
   /* USER CODE END 3 */
 }
